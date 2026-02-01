@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "MERN stack Job Portal project with secure authentication, job posting, job search, and application management.",
+  "homepage": "https://github.com/vishal-gupta5/JobHunt#readme",
+  "bugs": {
+    "url": "https://github.com/vishal-gupta5/JobHunt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vishal-gupta5/JobHunt.git"
+  },
+  "license": "ISC",
+  "author": "Vishal Gupta",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.5",
+    "nodemon": "^3.1.11"
+  }
+}
