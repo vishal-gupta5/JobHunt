@@ -4,3 +4,5 @@
 - Write the middlewares
 - Create a new project on mongoDB community server atlas
 - Connect database from your applications
+- Create a model for UserSchema
+- Install the validator depandancies
