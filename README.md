@@ -6,3 +6,5 @@
 - Connect database from your applications
 - Create a model for UserSchema
 - Install the validator depandancies
+- Create a model for JobSchema,
+- Create a model for CompanySchema,
