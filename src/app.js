@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/database");
+const userRouter = require("./routes/user.route");
 dotenv.config({});
 const app = express();
 
@@ -18,9 +19,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.get("/", (req, res) => {
-  return res.status(200).json({ message: "I am from backend", success: true });
-});
+app.use("/user", userRouter);
 
 connectDB()
   .then(() => {

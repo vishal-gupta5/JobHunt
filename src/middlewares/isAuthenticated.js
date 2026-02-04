@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.cookie.token;
+    const token = req.cookies.token;
     if (!token) {
       return res.status(400).json({
         message: "User is not authenticated!",
@@ -10,7 +10,7 @@ const isAuthenticated = async (req, res, next) => {
       });
     }
 
-    const decode = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
     if (!decode) {
       return res.status(400).json({
         message: "Token is not valid!",

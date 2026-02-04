@@ -1,8 +1,6 @@
-const dotenv = require("dotenv");
 const User = require("../models/User.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-dotenv.config({});
 
 // Register
 const register = async (req, res) => {
@@ -137,16 +135,8 @@ const updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, skills, bio } = req.body;
     const file = req.file;
-    if (!fullName || !email || !phoneNumber || !skills || !bio) {
-      return res.status(400).json({
-        message: "Something is missing!",
-        success: false,
-      });
-    }
-
     // Coundinary aayega idhar
 
-    const skillsArray = skills.split(", ");
     const userId = req.id;
 
     let user = await User.findById(userId);
@@ -158,12 +148,20 @@ const updateProfile = async (req, res) => {
       });
     }
 
-    // Update the user data
-    ((user.fullName = fullName),
-      (user.email = email),
-      (user.phoneNumber = phoneNumber),
-      (user.profile.bio = bio));
-    user.profile.skills = skillsArray;
+    // Update basic fields safely
+    if (fullName) user.fullName = fullName;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+
+    // Update skills safely
+    if (skills) {
+      user.skills = skills.split(",").map((s) => s.trim());
+    }
+
+    // Update profile fields safely
+    if (bio) {
+      user.profile.bio = bio;
+    }
 
     // We will create the field for resume
 
@@ -174,7 +172,7 @@ const updateProfile = async (req, res) => {
       fullName: user.fullName,
       email: user.email,
       phoneNumber: user.phoneNumber,
-      role: role._id,
+      role: user.role,
       profile: user.profile,
     };
 
@@ -186,7 +184,6 @@ const updateProfile = async (req, res) => {
   } catch (err) {
     return res.status(400).json({
       message: `Error: ${err.message}`,
-      user,
       success: false,
     });
   }
