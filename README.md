@@ -10,3 +10,4 @@
 - Create a model for JobSchema,
 - Create a model for CompanySchema,
 - Create a model for ApplicationSchema
+- Create a User controller
