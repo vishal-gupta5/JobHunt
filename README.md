@@ -11,3 +11,6 @@
 - Create a model for CompanySchema,
 - Create a model for ApplicationSchema
 - Create a User controller
+- Create a isAuthenticated middleware
+- Create the create.route.js file
+- Make app.use("/user", userRouter) middleware
