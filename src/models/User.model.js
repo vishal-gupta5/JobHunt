@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(value),
         message:
           "Password must contain 8+ chars, uppercase, lowercase, number, special char",
-      },
+      }, 
       trim: true,
     },
     role: {

@@ -117,7 +117,7 @@ const login = async (req, res) => {
   }
 };
 
-// Logout 
+// Logout
 const logout = async (req, res) => {
   try {
     return res.status(200).cookie(token, null, { expiresIn: 0 }).json({
@@ -132,10 +132,69 @@ const logout = async (req, res) => {
   }
 };
 
+// Update Profile
+const updateProfile = async (req, res) => {
+  try {
+    const { fullName, email, phoneNumber, skills, bio } = req.body;
+    const file = req.file;
+    if (!fullName || !email || !phoneNumber || !skills || !bio) {
+      return res.status(400).json({
+        message: "Something is missing!",
+        success: false,
+      });
+    }
 
+    // Coundinary aayega idhar
+
+    const skillsArray = skills.split(", ");
+    const userId = req.id;
+
+    let user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User not fount!",
+        success: false,
+      });
+    }
+
+    // Update the user data
+    ((user.fullName = fullName),
+      (user.email = email),
+      (user.phoneNumber = phoneNumber),
+      (user.profile.bio = bio));
+    user.profile.skills = skillsArray;
+
+    // We will create the field for resume
+
+    await user.save();
+
+    user = {
+      _id: user._id,
+      fullName: user.fullName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: role._id,
+      profile: user.profile,
+    };
+
+    return res.status(200).json({
+      message: "Profile Updated Successfully!",
+      user,
+      success: true,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: `Error: ${err.message}`,
+      user,
+      success: false,
+    });
+  }
+};
 
 module.exports = {
   register,
   login,
   logout,
+  updateProfile,
 };
