@@ -14,3 +14,4 @@
 - Create a isAuthenticated middleware
 - Create the create.route.js file
 - Make app.use("/user", userRouter) middleware
+- Create a registerCompany router inside the company.controller.js  file
