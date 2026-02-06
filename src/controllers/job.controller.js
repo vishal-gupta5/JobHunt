@@ -93,7 +93,31 @@ const getAllGobs = async (req, res) => {
   }
 };
 
+// Get job by Id
+const getJobById = async (req, res) => {
+  try {
+    const jobId = req.params.id;
+    const job = await Job.find(jobId);
+
+    if (!job) {
+      return res.status(404).json({
+        message: "Job not found",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      job,
+      success: true,
+    });
+  } catch (err) {
+    return res.status(200).json({
+      message: `Error: ${err.message}`,
+    });
+  }
+};
 module.exports = {
   jobPost,
   getAllGobs,
+  getJobById,
 };
