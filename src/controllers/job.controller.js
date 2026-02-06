@@ -116,6 +116,31 @@ const getJobById = async (req, res) => {
     });
   }
 };
+
+// Jobs created by Admin
+const getAdminJobs = async (req, res) => {
+  try {
+    const AdminId = req.id;
+    const jobs = await Job.find({ created_by: AdminId });
+    if (!jobs) {
+      return res.status(404).json({
+        message: "Jobs not found!",
+        success: false,
+      });
+    }
+
+    return res.status(200).json({
+      message: "All jobs are given as: ",
+      jobs,
+      success: true,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: `Error: ${err.message}`,
+    });
+  }
+};
+
 module.exports = {
   jobPost,
   getAllGobs,
