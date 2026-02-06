@@ -24,7 +24,7 @@ const JobSchema = new mongoose.Schema(
         message: "Invalid Input String",
       },
     },
-    requirement: {
+    requirements: {
       type: String,
       required: true,
       trim: true,
@@ -33,6 +33,10 @@ const JobSchema = new mongoose.Schema(
           typeof value === "string" && value.trim().length > 0,
         message: "Invalid Input String",
       },
+    },
+    experience: {
+      type: Number,
+      required: true,
     },
     salary: {
       type: Number,
