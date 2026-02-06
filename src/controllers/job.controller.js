@@ -1,5 +1,4 @@
 const Job = require("../models/Job.model");
-const { options } = require("../routes/company.router");
 
 // Job Post
 const jobPost = async (req, res) => {
@@ -14,10 +13,8 @@ const jobPost = async (req, res) => {
       positions,
       company,
       experience,
-      created_by,
     } = req.body;
 
-    const userId = req.id;
     if (
       !title ||
       !description ||
@@ -27,24 +24,23 @@ const jobPost = async (req, res) => {
       !jobType ||
       !positions ||
       !company ||
-      !experience ||
-      !created_by
+      !experience
     ) {
       return res.status(400).json({
         message: "Something is missing!",
         success: false,
       });
     }
-
+    const userId = req.id;
     const job = await Job.create({
       title,
       description,
-      requirements: requirements.split(", "),
+      requirements,
       salary: Number(salary),
       location,
       jobType,
       positions,
-      company: CompanyId,
+      company,
       experience,
       created_by: userId,
     });
@@ -145,4 +141,5 @@ module.exports = {
   jobPost,
   getAllGobs,
   getJobById,
+  getAdminJobs,
 };

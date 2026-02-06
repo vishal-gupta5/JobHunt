@@ -25,14 +25,9 @@ const JobSchema = new mongoose.Schema(
       },
     },
     requirements: {
-      type: String,
+      type: [String],
       required: true,
       trim: true,
-      validate: {
-        validator: (value) =>
-          typeof value === "string" && value.trim().length > 0,
-        message: "Invalid Input String",
-      },
     },
     experience: {
       type: Number,
@@ -85,7 +80,6 @@ const JobSchema = new mongoose.Schema(
     applications: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Application",
-      required: true,
     },
   },
   { timestamps: true },
