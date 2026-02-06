@@ -100,7 +100,7 @@ const login = async (req, res) => {
       .cookie("token", token, {
         minAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite: "strict",
+        sameSite: "lax",
       })
       .json({
         message: `Welcome back ${user.fullName}`,
@@ -118,10 +118,13 @@ const login = async (req, res) => {
 // Logout
 const logout = async (req, res) => {
   try {
-    return res.status(200).cookie(token, null, { expiresIn: 0 }).json({
-      message: "User Logout Successfully!",
-      success: true,
-    });
+    return res
+      .status(200)
+      .cookie("token", "", { httpOnly: true, expires: new Date(0) })
+      .json({
+        message: "User Logout Successfully!",
+        success: true,
+      });
   } catch (err) {
     return res.status(400).json({
       message: `Error: ${err.message}`,

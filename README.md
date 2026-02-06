@@ -15,3 +15,4 @@
 - Create the create.route.js file
 - Make app.use("/user", userRouter) middleware
 - Create a registerCompany router inside the company.controller.js  file
+- Create a company/get, company/getById and company/updateById routes

@@ -4,6 +4,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 const userRouter = require("./routes/user.route");
+const companyRouter = require("./routes/company.router");
 dotenv.config({});
 const app = express();
 
@@ -12,14 +13,16 @@ const PORT = process.env.PORT || 3000;
 // middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 const corsOptions = {
-  origin: "https//localhost:5173",
+  origin: "http://localhost:5173",
   credentials: true,
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 app.use("/user", userRouter);
+app.use("/company", companyRouter);
 
 connectDB()
   .then(() => {
