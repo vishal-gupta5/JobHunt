@@ -64,12 +64,14 @@ const getAllGobs = async (req, res) => {
     const keyword = req.query.keyword || "";
     const query = {
       $or: [
-        { title: { $regex: keyword, options: "i" } },
-        { description: { $regex: keyword, options: "i" } },
+        { title: { $regex: keyword, $options: "i" } },
+        { description: { $regex: keyword, $options: "i" } },
       ],
     };
 
-    const jobs = await Job.find(query);
+    const jobs = await Job.find(query)
+      .populate({ path: "company" })
+      .sort({ createdAt: -1 });
     if (!jobs) {
       return res.status(404).json({
         message: "Jobs not found",
@@ -93,7 +95,7 @@ const getAllGobs = async (req, res) => {
 const getJobById = async (req, res) => {
   try {
     const jobId = req.params.id;
-    const job = await Job.find(jobId);
+    const job = await Job.findById(jobId).populate("company");
 
     if (!job) {
       return res.status(404).json({
