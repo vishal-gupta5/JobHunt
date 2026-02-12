@@ -90,19 +90,67 @@ const getAppliedJobs = async (req, res) => {
 // getApplications -> For Admin
 
 const getApplicants = async (req, res) => {
-    try {
-        
-    } catch (err) {
-        return res.status(400).json({
-            message: `Error: ${err.message}`,
-            success: false,
-        })
+  try {
+    const userId = req.body.params;
+    const job = await Application.find({ applicant: userId }).populate({
+      path: "applications",
+      options: { sort: { created_by: -1 } },
+      populate: {
+        path: "applicant",
+        options: { sort: { created_by: -1 } },
+      },
+    });
+    if (!job) {
+      return res.status(401).json({
+        message: "Job Not found!",
+        success: false,
+      });
     }
-}
 
+    return res.status(200).json({
+      message: "Jobs are such as: ",
+      job,
+      success: true,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      message: `Error: ${err.message}`,
+      success: false,
+    });
+  }
+};
 
+// Update the applications
+const updateStatus = async (req, res) => {
+  const { status } = req.params;
+  const applicationId = req.params.id;
+  if (!status) {
+    return res.status(400).json({
+      message: "Status is required!",
+      success: false,
+    });
+  }
+
+  const application = await Application.findOne({ _id: applicationId });
+  if (!application) {
+    return res.status(400).json({
+      message: "Application not found!",
+      success: false,
+    });
+  }
+
+  // update the status
+  application.status = status.toLowerCase();
+  await application.save();
+
+  return res.status(200).json({
+    message: "Update the status successfully!",
+    success: true,
+  });
+};
 module.exports = {
   applyJob,
   getAppliedJobs,
-  getApplicants
+  getApplicants,
+  updateStatus,
 };
