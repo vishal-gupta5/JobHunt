@@ -1,6 +1,5 @@
 const Application = require("../models/Application.model");
 const Job = require("../models/Job.model");
-const { options } = require("../routes/job.router");
 
 // Apply Job
 const applyJob = async (req, res) => {
