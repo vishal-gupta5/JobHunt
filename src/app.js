@@ -6,6 +6,7 @@ const connectDB = require("./config/database");
 const userRouter = require("./routes/user.route");
 const companyRouter = require("./routes/company.router");
 const jobRouter = require("./routes/job.router");
+const applicationRouter = require("./routes/applicate.router");
 dotenv.config({});
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use("/user", userRouter);
 app.use("/company", companyRouter);
 app.use("/job", jobRouter);
+app.use("/application", applicationRouter);
 
 connectDB()
   .then(() => {
